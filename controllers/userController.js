@@ -18,12 +18,7 @@ export function createUser(req,res){
                 return
             }
         }
-
-
-
-
         const hashedPassword=bcrypt.hashSync(req.body.password,10)//password hashing eka 10 parak karanna
-
         const user = new User({
             firstName : req.body.firstName ,
             lastName : req.body.lastName,
@@ -31,7 +26,6 @@ export function createUser(req,res){
             password :hashedPassword,
             role:req.body.role,
         })
-
             user.save().then(()=>{
                 res.json({
                     message:"User created successfully"
@@ -42,8 +36,7 @@ export function createUser(req,res){
                     message:"Failed to add product",
                     error: err.message 
                 });
-            });
-            
+            });     
 }
 export function loginUser(req,res){
     const email = req.body.email
@@ -79,12 +72,10 @@ export function loginUser(req,res){
                         message:"Invalid password"
                     })
                 }
-
            }
         }
     )
 } 
-
 export function isAdmin(req){
     if(req.user==null){
         return false
