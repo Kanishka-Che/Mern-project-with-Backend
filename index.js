@@ -20,7 +20,7 @@ app.use((req,res,next)=>{//authorization part user kenek log weddi user kawda ki
     if(tokenString !=null){
         const token = tokenString.replace("Bearer ","")
 
-        jwt.verify(token, "cbc-batch-five#@2025", (err, decoded) => {
+        jwt.verify(token,process.env.JWT_KEY , (err, decoded) => {
             if (err) {
                 console.log("Invalid token");
                 return res.status(403).json({ message: "Invalid token" });
