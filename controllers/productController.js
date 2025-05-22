@@ -4,13 +4,14 @@ import { isAdmin } from "./userController.js";
 export async function getProducts(req,res){
 
     try{
-        if(isAdmin(req)){
-            const products = await Product.find()
-            res.json(products)
-        }else{
-            const products = await Product.find({isAvailable : true})
-            res.json(products)
-        }
+            if(isAdmin(req)){
+                const products = await Product.find()
+                res.json(products)
+            }else{
+                const product = await Product.find({isAvailable:true})
+                res.json(product)
+            }
+            
         
     }catch(err){
         res.json({
@@ -22,6 +23,8 @@ export async function getProducts(req,res){
 
 export function saveProduct(req, res){
 
+
+    //check the admin
     if(!isAdmin(req)){
         res.status(403).json({
             message: "You are not authorized to add a product"
@@ -63,7 +66,7 @@ export async function deleteProduct(req,res){
             message : "Product deleted successfully"
         })
     }catch(err){
-        res.status(500).json({
+        res.status(500).json({//becouse it saver site error
             message : "Failed to delete product",
             error : err
         })
