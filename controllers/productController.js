@@ -4,14 +4,13 @@ import { isAdmin } from "./userController.js";
 export async function getProducts(req,res){
 
     try{
-            if(isAdmin(req)){
-                const products = await Product.find()
-                res.json(products)
-            }else{
-                const product = await Product.find({isAvailable:true})
-                res.json(product)
-            }
-            
+        if(isAdmin(req)){
+            const products = await Product.find()
+            res.json(products)
+        }else{
+            const products = await Product.find({isAvailable : true})
+            res.json(products)
+        }
         
     }catch(err){
         res.json({
@@ -22,8 +21,7 @@ export async function getProducts(req,res){
 }
 
 export function saveProduct(req, res){
-
-
+    
     //check the admin
     if(!isAdmin(req)){
         res.status(403).json({
@@ -67,6 +65,7 @@ export async function deleteProduct(req,res){
         })
     }catch(err){
         res.status(500).json({//becouse it saver site error
+
             message : "Failed to delete product",
             error : err
         })
@@ -78,20 +77,24 @@ export async function updateProduct(req,res){
         res.status(403).json({
             message: "You are not authorized to update a product"
         })
-        return //rapidly  sidda wima newethwimata return use kari(stop the request)
+        return//rapidly  sidda wima newethwimata return use kari(stop the request)
     }
+
     const productId = req.params.productId
     const updatingData = req.body
+
     try{
         await Product.updateOne(
             {productId : productId},
             updatingData
         )
+
         res.json(
             {
                 message : "Product updated successfully"
             }
         )
+
     }catch(err){
         res.status(500).json({
             message : "Internal server error",
@@ -99,12 +102,17 @@ export async function updateProduct(req,res){
         })
     }
 }
+
 export async function getProductById(req,res){//User ID eka danna data get karanna
+
     const productId = req.params.productId
+    
     try{
+
         const product = await Product.findOne(
             {productId : productId}
         )
+
         if(product == null){
             res.status(404).json({
                 message : "Product not found"
@@ -123,6 +131,7 @@ export async function getProductById(req,res){//User ID eka danna data get karan
                 res.json(product)
             }
         }
+
     }catch(err){
         res.status(500).json({
             message : "Internal server error",
@@ -130,5 +139,5 @@ export async function getProductById(req,res){//User ID eka danna data get karan
         })
     }
 
-}
 
+}
