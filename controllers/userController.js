@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 import axios from "axios";
 import nodemailer from "nodemailer";
-
+import OTP from "../models/otp.js";
 dotenv.config();
 
 export function createUser(req,res){
@@ -198,7 +198,7 @@ export async function sendOTP(req,res){
 
     
     const message = {
-        from : "malithdilshan27@gmail.com",
+        from : "kanishkachethana123@gmail.com",
         to: email,
         subject : "Resetting password for crystal beauty clear.",
         text : "This your password reset OTP : " + randomOTP
