@@ -106,6 +106,7 @@ export async function loginWithGoogle(req,res){
             Authorization: `Bearer ${token}`
         }
     })
+    
 
     console.log(response.data);
 
@@ -161,18 +162,19 @@ export async function loginWithGoogle(req,res){
     }
 
 }
+//manage Email
 const transport = nodemailer.createTransport({
     service: 'gmail',
     host : 'smtp.gmail.com',
     port: 587,
     secure: false,
     auth: {
-        user: "malithdilshan27@gmail.com",
-        pass: "javyzfzydwsdrmbg"
+        user: "kanishkachethana123@gmail.com",
+        pass: process.env.Google
     }
 })
 export async function sendOTP(req,res){
-    //javy zfzy dwsd rmbg
+   
     const randomOTP = Math.floor(100000 + Math.random() * 900000);
     const email = req.body.email;
     if(email == null){
@@ -183,10 +185,10 @@ export async function sendOTP(req,res){
     
     }
     const user = await User.findOne({
-        email : email
+        email: email
     })
     if(user == null){
-        res.status(404).json({
+        res.status(401).json({
             message:"User not found"
         })
     }
@@ -264,6 +266,18 @@ export async function resetPassword(req,res){
         })
     }
 
+}
+export function getUser(req,res){
+    if(req.user == null){
+        res.status(403).json({
+            message: "You are not authorized to view user details"
+        })
+        return
+    }else{
+        res.json({
+            ...req.user
+        })
+    }
 }
 
 export function isAdmin(req){
