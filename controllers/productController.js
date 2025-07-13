@@ -21,8 +21,7 @@ export async function getProducts(req,res){
 }
 
 export function saveProduct(req, res){
-    
-    //check the admin
+
     if(!isAdmin(req)){
         res.status(403).json({
             message: "You are not authorized to add a product"
@@ -64,8 +63,7 @@ export async function deleteProduct(req,res){
             message : "Product deleted successfully"
         })
     }catch(err){
-        res.status(500).json({//becouse it saver site error
-
+        res.status(500).json({
             message : "Failed to delete product",
             error : err
         })
@@ -77,7 +75,7 @@ export async function updateProduct(req,res){
         res.status(403).json({
             message: "You are not authorized to update a product"
         })
-        return//rapidly  sidda wima newethwimata return use kari(stop the request)
+        return
     }
 
     const productId = req.params.productId
@@ -102,11 +100,9 @@ export async function updateProduct(req,res){
         })
     }
 }
-
-export async function getProductById(req,res){//User ID eka danna data get karanna
-
+export async function getProductById(req,res){
     const productId = req.params.productId
-    
+   
     try{
 
         const product = await Product.findOne(
@@ -138,14 +134,11 @@ export async function getProductById(req,res){//User ID eka danna data get karan
             error : err
         })
     }
-
-
 }
 export async function searchProducts(req,res){
     const searchQuery = req.params.query
     try{
         const products = await Product.find({
-            //give logical think
             $or:[
                 {name :  {$regex : searchQuery, $options : "i"}},
                 {altNames : {$elemMatch : {$regex : searchQuery, $options : "i"}}}

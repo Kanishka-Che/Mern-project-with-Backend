@@ -7,6 +7,8 @@ import nodemailer from "nodemailer";
 import OTP from "../models/otp.js";
 dotenv.config();
 
+
+
 export function createUser(req,res){
     if(req.body.role == "admin"){
         if(req.user!= null){

@@ -1,5 +1,6 @@
 import Order from "../models/order.js"
 import Product from "../models/product.js"
+import { isAdmin } from "./userController.js";
 
 export async function createOrder(req,res){
 
@@ -21,7 +22,7 @@ export async function createOrder(req,res){
         orderInfo.name = req.user.firstName + " " + req.user.lastName  
     }
 
-    //CBC00001
+   
     let orderId = "CBC00001"
 
     const lastOrder = await Order.find().sort({date : -1}).limit(1)
@@ -112,10 +113,10 @@ export async function getOrders(req,res) {
     }
     try{
         if(req.user.role=="admin"){
-            const orders = await order.find();
+            const orders = await Order.find();
             res.json(orders);
         }else{
-            const orders= await order.find({email:req.user.email});
+            const orders= await Order.find({email:req.user.email});
             res.json(orders);
         }
     }catch (err){
