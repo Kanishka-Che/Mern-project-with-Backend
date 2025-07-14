@@ -269,6 +269,8 @@ export async function resetPassword(req,res){
     }
 
 }
+
+//check the user currently loging
 export function getUser(req,res){
     if(req.user == null){
         res.status(403).json({
@@ -281,7 +283,7 @@ export function getUser(req,res){
         })
     }
 }
-
+ 
 export function isAdmin(req){
     if(req.user == null){
         return false

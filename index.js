@@ -33,12 +33,15 @@ app.use((req,res,next)=>{//authorization part user kenek log weddi user kawda ki
         next();
     }
 });
+//connect with mongoDB
     mongoose.connect(process.env.MONGODB_URL)
         .then(()=>{
                 console.log("Connected to the database")
         }).catch((err) => {
                 console.log("Database connection failed:", err.message);
 })
+
+
 app.use("/api/products", productRouter),
 app.use("/api/users",userRouter),
 app.use("/api/orders",orderRouter)
